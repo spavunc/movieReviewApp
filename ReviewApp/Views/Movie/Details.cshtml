@@ -1,0 +1,236 @@
+﻿@model ReviewApp.Model.Movie
+
+@{
+    ViewData["Title"] = "MovieView";
+    var genreLen = Model.MovieGenres.Count();
+    var writerLen = Model.MovieWriters.Count();
+    var studioLen = Model.MovieStudios.Count();
+    var count = 0;
+    float averageScore = 0;
+    float avg = 0;
+}
+<div class="container-fluid">
+    <div id="bg"></div>
+    <div class="row" id="title">
+        <div class="col-lg-4 col-md-3 col-sm-4 col-xs-6">
+            <div class="row">
+                <img class="col-lg-8 col-md-12 col-sm-12 col-xs-10" src="@Url.Content("~/movies/" + Model.PictureURL)" width="200" height="350" />
+            </div>
+        </div>
+        <div id="info" class="col-lg-8 col-md-9 col-sm-8 col-xs-6">
+            <div class="row">
+                <h2>@Model.Title  (@Model.ReleaseDate.Year)</h2>
+            </div>
+            <div class="row">
+                <h4>Directed by: <a asp-action="Details" asp-controller="Person" asp-route-id="@Model.DirectorID">@Model?.Director?.FullName</a>  </h4>
+                <h4>
+                    Writen by:
+                    @foreach (var writer in @Model.MovieWriters)
+                    {
+                        if (writerLen >= (count + 2))
+                        {
+                            <a asp-action="Details" asp-controller="Person" asp-route-id="@writer.Writer.ID">
+                                @writer.Writer.FullName<text>,&nbsp;</text>
+                            </a>
+                            count++;
+                        }
+                        else
+                        {
+                            <a asp-action="Details" asp-controller="Person" asp-route-id="@writer.Writer.ID">
+                                @writer.Writer.FullName<text>&nbsp;</text>
+                                </a>
+                                count = 0;
+                                }
+
+                                }
+                        </h4>
+                <p>@Model.Synopsis  </p>
+            </div>
+        </div>
+    </div>
+    <br /><br />
+    <div class="row">
+        <div class="col-lg-4">
+            <dl>
+                <dt>
+                    Release Date
+                </dt>
+                <dd>
+                    @Model.ReleaseDate.Day/@Model.ReleaseDate.Month/@Model.ReleaseDate.Year
+                </dd>
+                <dt>
+                    Country of Release
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CountryOfRelease)
+                </dd>
+                <dt>
+                    Average Score
+                </dt>
+                <dd>
+                    @foreach (var score in @Model.UserRatings)
+                    {
+                        averageScore = averageScore + score.Score;
+                        if (score.Equals(Model.UserRatings.Last()))
+                        {
+                            avg = averageScore / Model.UserRatings.Count();
+                        }
+
+                    }
+                    @avg.ToString("F")
+                </dd>
+                <dt>
+                    Genres
+                </dt>
+                <dd>
+                    @foreach (var genre in @Model.MovieGenres)
+                    {
+                        if (genreLen >= (count + 2))
+                        {
+                            @genre.Genre.name<text>,&nbsp;</text>;
+                            count++;
+                        }
+                        else
+                        {
+                            @genre.Genre.name<text>&nbsp;</text>;
+                            count = 0;
+                        }
+
+                    }
+                </dd>
+                <dt>
+                    Duration
+                </dt>
+                <dd>
+                    @Model.DurationMinutes minutes
+                </dd>
+                <dt>
+                    Studios
+                </dt>
+                <dd>
+                    @foreach (var studio in @Model.MovieStudios)
+                    {
+                        if (studioLen >= (count + 2))
+                        {
+                            @studio.Studio.Name<text>,&nbsp;</text>;
+                            count++;
+                        }
+                        else
+                        {
+                            @studio.Studio.Name<text>&nbsp;</text>;
+                            count = 0;
+                        }
+
+                    }
+                </dd>
+                <dt>
+                    Rate
+                </dt>
+                <dd>
+                    <form asp-controller="Movie" asp-action="Rate" id="form-rating">
+                        <input type="hidden" value="@Model.ID" name="MovieID" />
+                        <select name="Score" id="rating" onchange="rated()">
+                            <option value="">Select a Rating</option>
+                            <option value="10">(10) Masterpiece</option>
+                            <option value="9">(9) Great</option>
+                            <option value="8">(8) Very Good</option>
+                            <option value="7">(7) Good</option>
+                            <option value="6">(6) Fine</option>
+                            <option value="5">(5) Average</option>
+                            <option value="4">(4) Bad</option>
+                            <option value="3">(3) Very Bad</option>
+                            <option value="2">(2) Horrible</option>
+                            <option value="1">(1) Appalling</option>
+                        </select>
+</form>                    
+                </dd>
+            </dl>
+        </div>
+        <div class="col-lg-8">
+            <iframe type="text/html" width="640" height="350" src="https://www.youtube.com/embed/@Model.TrailerURL?autoplay=0" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <div class="row">
+        <h4>Cast</h4><br />
+        @foreach (var actor in @Model.MovieActors.Take(6))
+        {
+            
+                     <div class="characters col-md-4 col-sm-6 col-xs-12">
+                         <a asp-action="Details" asp-controller="Person" asp-route-id="@actor.Actor.ID">
+                             <div class="col-xs-3">
+                                 <img src="@Url.Content("~/people/" + @actor.Actor.PictureURL)" width="70" height="100" class="profile-pic" />
+                             </div>
+                             <div class="col-xs-3" style="margin-top: 2em;">
+                                 @actor.Actor.FullName
+                             </div>
+                         </a>
+                         <div class="col-xs-3" style="margin-top: 2em;">
+                             @actor.Actor.CharacterActors.First().Character.FullName
+                         </div>
+                         <div class="col-xs-3">
+                             <img src="@Url.Content("~/characters/" + @actor.Actor.CharacterActors.First().Character.PictureURL)" width="70" height="100" class="profile-pic" />
+                         </div>
+                     </div>
+
+                         }
+</div>
+</div>
+
+<div>
+    @if (this.User.IsInRole("Admin")) {
+        <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> 
+                                                                          }
+    <a asp-action="Index">Back to List</a>
+</div>
+    <style>
+#bg{
+           background-image:url(@Url.Content("~/movies/" + Model.BackgroundURL));
+                background-size: cover;
+                background-repeat: no-repeat;
+            width: 100%;
+            position: absolute;
+            left:0px;
+            height:30%;
+                z-index: -1000;
+            }
+#title{
+            margin-top: 10em;
+        }
+#info{
+        margin-top: 10.5em;
+        margin-left: -5em;
+        }
+        .characters{
+        background: linear-gradient(110deg, #fec04d 50%, #edb647 50%);
+        display: block;
+    border-radius: 1em;
+        font-weight: bold;
+        }
+        .profile-pic{
+        border-radius: 10%;
+        }
+    </style>
+<style media="screen and (max-width:1200px)">
+#info {
+        margin-top: 10.5em;
+        margin-left: 0em;
+    }
+</style>
+
+@section Scripts{
+    <script>
+        function rated() {
+            $('#form-rating').submit();
+        }
+        </script>
+
+     <script>
+        $(document).ready(function () {
+
+            if (@ViewBag.Rating != null) {
+                $('#rating').val(@ViewBag.Rating);
+            }
+        });
+    </script>
+}

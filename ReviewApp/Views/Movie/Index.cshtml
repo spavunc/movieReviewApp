@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ReviewApp.Model.Movie>
+
+@{
+    ViewData["Title"] = "Index";
+   
+}
+
+<div style="margin-top: 20px;">
+    <partial name="_MovieFilter" model="new ReviewApp.Web.Models.MovieFilterModel()" />
+</div>
+
+<h2>Movies</h2>
+@if (this.User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+    <partial name="_IndexTable" />
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $('#submit-data').click(function () {
+
+            $.ajax({
+                url: "@Url.Action("IndexAjax")",
+                method: "POST",
+                data: $('#form-search').serialize(),
+                success: function (result) {
+                    $('#table-movies').replaceWith(result);
+                }
+            });
+        });
+    </script>
+    <script>
+        $('#table-movies .deleteBtn').click(function () {
+            var id = $(this).data("model-id");
+            var row = $(this).closest("td");
+            var url = "@Url.Action("Delete")";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: { id: id },
+                success: function (result) {
+                    row.remove();
+                    $('#table-movies').replaceWith(result);
+                }
+            })
+        });
+    </script>
+}

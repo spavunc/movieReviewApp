@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ReviewApp.Model.Movie>
+
+@{
+    ViewData["Title"] = "Index";
+    float averageScore = 0;
+}
+
+<h2>Movies</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <a asp-controller="Movie" asp-action="Details" asp-route-id="@item.ID">
+            <div class="characters col-md-2 col-sm-6 col-xs-12">
+                <div class="row">
+                    <img src="@Url.Content("~/movies/" + item.PictureURL)" width="195" height="300" />
+                    <label>
+                        @foreach (var score in @item.UserRatings)
+                        {
+                            averageScore = averageScore + score.Score;
+                            if (score.Equals(item.UserRatings.Last()))
+                            {
+                                item.AverageScore = (averageScore / item.UserRatings.Count());
+                                averageScore = 0;
+                            }
+                        }
+                        @item.AverageScore.ToString("F")
+                    </label> <i class="fa fa-star" aria-hidden="true" style="color:#f5c518;"></i>
+
+                    <h4>@item.Title</h4>
+                </div>
+            </div>
+        </a>
+
+    }
+</div>
+<h2>TV Shows</h2>
+<partial name="_ShowsList" model="new List<ReviewApp.Model.Show> { }" />
+
+@section Scripts{ 
+<script>
+    $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetShows")",
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    $("#tbl-shows").replaceWith(result);
+                }
+            });
+        });
+</script>
+    }
+
+

@@ -1,0 +1,50 @@
+﻿@model ReviewApp.Model.Movie
+
+@{
+    var pattern = System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.ToLower();
+    pattern = pattern.Replace("DD", "D").Replace("D", "DD");
+    pattern = pattern.Replace("MM", "M").Replace("M", "MM");
+}
+<div class="form-group">
+    <label asp-for="Title" class="control-label"></label>
+    <input asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CountryOfRelease" class="control-label"></label>
+    <input asp-for="CountryOfRelease" class="form-control" />
+    <span asp-validation-for="CountryOfRelease" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="TrailerURL" class="control-label"></label>
+    <input asp-for="TrailerURL" class="form-control" />
+    <span asp-validation-for="TrailerURL" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="control-label">Release Date</label>
+    <div class="input-group date" data-provide="datepicker"
+         data-date-format="@pattern">
+        <input asp-for="ReleaseDate" type="text" class="form-control">
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
+    </div>
+    <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Synopsis" class="control-label"></label>
+    <textarea asp-for="Synopsis" class="form-control"></textarea>
+    <span asp-validation-for="Synopsis" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="DurationMinutes" class="control-label"></label>
+    <input asp-for="DurationMinutes" class="form-control" />
+    <span asp-validation-for="DurationMinutes" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="control-label">Director</label>
+    <select asp-for="DirectorID" asp-items="ViewBag.PossiblePeople" class="form-control"></select>
+</div>
+<div class="form-group">
+    <input type="submit" value="Submit" class="btn btn-default" />
+</div>

@@ -1,0 +1,58 @@
+﻿@model ReviewApp.Model.Person
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div calss="row">
+    <h2>@Model.FullName</h2>
+    @if (Model.PictureURL != null)
+    {
+    <img class="col-xs-4"  src="@Url.Content("~/people/" + Model.PictureURL)" width="250" height="450" />
+    }
+    <dl class="dl-horizontal col-xs-8">
+        <dt>
+            Gender
+        </dt>
+        <dd>
+            @if (Model.Gender == 'M')
+            {
+                <p>Male</p>
+            }
+            else
+            {
+                <p>Female</p>
+            }
+        </dd>
+        @if (Model.DateOfBirth != null)
+        {
+            <dt>
+                Date of Birth
+            </dt>
+            <dd>
+                @Model.DateOfBirth.Value.Day.ToString()/@Model.DateOfBirth.Value.Month.ToString()/@Model.DateOfBirth.Value.Year.ToString()
+            </dd>
+        }
+        @if (Model.PlaceOfBirth != null)
+        {
+            <dt>
+                Place of Birth
+            </dt>
+            <dd>
+                @Model.PlaceOfBirth,  @Model.CountryOfBirth
+            </dd>
+        }
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        </dl>
+</div>
+<div class="row">
+    @if (this.User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a>
+    }
+</div>

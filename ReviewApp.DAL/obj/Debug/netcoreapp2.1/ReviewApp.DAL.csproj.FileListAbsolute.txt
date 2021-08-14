@@ -1,0 +1,15 @@
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\bin\Debug\netcoreapp2.1\ReviewApp.Model.dll
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\obj\Debug\netcoreapp2.1\ReviewApp.DAL.csprojAssemblyReference.cache
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\obj\Debug\netcoreapp2.1\ReviewApp.DAL.csproj.CoreCompileInputs.cache
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\obj\Debug\netcoreapp2.1\ReviewApp.DAL.AssemblyInfoInputs.cache
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\obj\Debug\netcoreapp2.1\ReviewApp.DAL.AssemblyInfo.cs
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\bin\Debug\netcoreapp2.1\ReviewApp.DAL.deps.json
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\bin\Debug\netcoreapp2.1\ReviewApp.DAL.runtimeconfig.json
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\bin\Debug\netcoreapp2.1\ReviewApp.DAL.runtimeconfig.dev.json
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\bin\Debug\netcoreapp2.1\ReviewApp.DAL.dll
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\bin\Debug\netcoreapp2.1\ReviewApp.DAL.pdb
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\bin\Debug\netcoreapp2.1\ReviewApp.Model.pdb
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\obj\Debug\netcoreapp2.1\ReviewApp.DAL.csproj.CopyComplete
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\obj\Debug\netcoreapp2.1\ReviewApp.DAL.dll
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\obj\Debug\netcoreapp2.1\ReviewApp.DAL.pdb
+E:\mvc19-20\projekt\ReviewApp\ReviewApp.DAL\obj\Debug\netcoreapp2.1\ReviewApp.DAL.genruntimeconfig.cache

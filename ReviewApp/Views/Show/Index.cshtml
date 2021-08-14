@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ReviewApp.Model.Show>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div style="margin-top: 20px;">
+    <partial name="_ShowFilter" model="new ReviewApp.Web.Models.ShowFilterModel()" />
+</div>
+
+<h2>Shows</h2>
+@if (this.User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+<partial name="_IndexTable" />
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $('#submit-data').click(function () {
+
+            $.ajax({
+                url: "@Url.Action("IndexAjax")",
+                method: "POST",
+                data: $('#form-search').serialize(),
+                success: function (result) {
+                    $('#table-shows').replaceWith(result);
+                }
+            });
+        });
+    </script>
+}

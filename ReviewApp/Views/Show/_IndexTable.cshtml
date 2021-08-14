@@ -1,0 +1,86 @@
+﻿@model IEnumerable<ReviewApp.Model.Show>
+@{
+    var count = 0;
+    float averageScore = 0;
+}
+<table class="table" id="table-shows">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                Average Score
+            </th>
+            <th>
+                Episode Duration
+            </th>
+            <th>
+                Number of Episodes
+            </th>
+            <th>
+                Genre
+            </th>
+            <th>
+
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@Url.Content("~/shows/" + item.PictureURL)" width="65" height="100" />
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Title)</a>
+                </td>
+                <td>
+                    @foreach (var score in @item.UserRatings)
+                    {
+                        averageScore = averageScore + score.Score;
+                        if (score.Equals(item.UserRatings.Last()))
+                        {
+                            item.AverageScore = (averageScore / item.UserRatings.Count());
+                            averageScore = 0;
+                        }
+                    }
+                    @item.AverageScore.ToString("F")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpisodeDuration)
+                </td>
+                <td>
+                    @item.NumberOfEpisodes
+                </td>
+                <td>
+                    @foreach (var genre in @item.ShowGenres)
+                    {
+                        if (item.ShowGenres.Count() >= (count + 2))
+                        {
+                            @genre.Genre.name<text>,&nbsp;</text>;
+                            count++;
+                        }
+                        else
+                        {
+                            @genre.Genre.name<text>&nbsp;</text>;
+                            count = 0;
+                        }
+
+                    }
+                </td>
+                @if (this.User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
