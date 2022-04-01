@@ -1,0 +1,10 @@
+﻿@using ReviewApp.Web.Models
+
+@model MovieFilterModel
+
+<form action="@Url.Action("IndexAjax")" method="post" class="form-inline" id="form-search">
+    <div class="form-group">
+        <input asp-for="Name" class="form-control" type="text" placeholder="Find a movie" />
+    </div>
+    <button type="button" class="btn btn-default" id="submit-data">Search</button>
+</form>
